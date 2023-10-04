@@ -1,15 +1,29 @@
 package models
 
+const (
+	PROPOSAL_STATUS_DEAD = iota
+	PROPOSAL_STATUS_PROPOSED
+	PROPOSAL_STATUS_APPROVED
+)
+const (
+	PROPOSAL_TYPE_TRANSFER = iota
+	PROPOSAL_TYPE_AGREEMENT
+	PROPOSAL_TYPE_PROMPT
+)
+
 type Proposal struct {
 	ID              string   `json:"uid" bson:"_id"`
 	TransactionType int      `json:"transactionType" bson:"transactionType"`
-	Amount          int      `json:"amount" bson:"amount"`
+	Agreement       string   `json:"agreement" bson:"agreement"`
+	Prompt          []string `json:"prompt" bson:"prompt"`
 	TargetAddress   string   `json:"targetAddr" bson:"targetAddress"`
+	TransferMutez   int      `json:"transferMutez" bson:"transferMutez"`
 	ProposerAddress string   `json:"proposerAddr" bson:"proposerAddress"`
 	Status          int      `json:"status" bson:"status"`
 	CreatedTime     int64    `json:"createdTime" bson:"createdTime"`
 	ExpiredTime     int64    `json:"expiredTime" bson:"expiredTime"`
-	Voted           []string `json:"voted" bson:"voted"`
-	RejectCount     int      `json:"rejectCount" bson:"rejectCount"`
-	SignCount       int      `json:"signCount" bson:"signCount"`
+	Approvals       []string `json:"approvals" bson:"approvals"`
+	ApprovalsCount  int      `json:"approvalsCount" bson:"approvalsCount"`
+}
+type ProposalUpdate struct {
 }

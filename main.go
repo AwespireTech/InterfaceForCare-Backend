@@ -6,9 +6,13 @@ import (
 )
 
 func main() {
+	router := createRouter()
+
+	router.Run(":8080")
+}
+
+func createRouter() *gin.Engine {
 	router := gin.Default()
-	router.Use(gin.Recovery())
-	router.Use(gin.Logger())
 	river := router.Group("api")
 	{
 		routes.SetRiverRoutes(river)
@@ -18,6 +22,5 @@ func main() {
 			"message": "Welcome to InterfaceForCare API",
 		})
 	})
-
-	router.Run(":8080")
+	return router
 }
