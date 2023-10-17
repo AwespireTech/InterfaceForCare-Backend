@@ -10,9 +10,11 @@ const (
 // River is a struct that represent the river data
 
 type River struct {
-	ID            int        `json:"id" bson:"_id"`
+	ID            int        `json:"id" bson:"_id,omitempty"`
 	Name          string     `json:"name" bson:"name"`
+	Description   string     `json:"description" bson:"description"`
 	Agreement     string     `json:"agreement" bson:"agreement"`
+	Dataset       string     `json:"dataset" bson:"dataset"`
 	Generation    int        `json:"gen" bson:"generation"`
 	CreatedTime   time.Time  `json:"createdTime" bson:"createdTime"`
 	ExpiredTime   time.Time  `json:"expiredTime" bson:"expiredTime"`

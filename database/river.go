@@ -5,10 +5,42 @@ import (
 	"time"
 
 	"github.com/AwespireTech/InterfaceForCare-Backend/models"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func GetAllRivers(assending bool) ([]models.River, error) {
-	return nil, nil
+func ascending(isAscending bool) int {
+	if isAscending {
+		return 1
+	}
+	return -1
+}
+func GetAllRivers(param models.RiversParams) ([]models.River, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	defer cancel()
+	collection := client.Database("InterfaceForCare").Collection("river")
+	var rivers []models.River
+	findOptions := options.Find().SetSort(bson.D{{Key: param.SortBy, Value: ascending(param.Ascending)}})
+	cursor, err := collection.Find(ctx, bson.D{}, findOptions)
+	if err != nil {
+		return nil, err
+	}
+	defer cursor.Close(ctx)
+	for cursor.Next(ctx) {
+		var river models.River
+		err := cursor.Decode(&river)
+		if err != nil {
+			return nil, err
+		}
+		rivers = append(rivers, river)
+	}
+	if err := cursor.Err(); err != nil {
+		return nil, err
+	}
+	for i, river := range rivers {
+		rivers[i] = fillEventAndProposalData(river)
+	}
+	return rivers, nil
 }
 
 func GetRiverById(id int) (models.River, error) {
@@ -17,7 +49,7 @@ func GetRiverById(id int) (models.River, error) {
 	collection := client.Database("InterfaceForCare").Collection("river")
 	var river models.River
 	err := collection.FindOne(ctx, models.River{ID: id}).Decode(&river)
-	river = FillEventAndProposalData(river)
+	river = fillEventAndProposalData(river)
 	return river, err
 }
 func GetEventById(id string) (models.Event, error) {
@@ -36,7 +68,7 @@ func GetProposalById(id string) (models.Proposal, error) {
 	err := collection.FindOne(ctx, models.Proposal{ID: id}).Decode(&proposal)
 	return proposal, err
 }
-func FillEventAndProposalData(river models.River) models.River {
+func fillEventAndProposalData(river models.River) models.River {
 	var events []models.Event
 	for _, eventID := range river.Events {
 		event, err := GetEventById(eventID)
