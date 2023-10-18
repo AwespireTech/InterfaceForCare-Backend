@@ -18,4 +18,5 @@ type Event struct {
 	ParticipantsCount int       `json:"participantsCount" bson:"participantsCount"`
 	Approvals         []string  `json:"approvals" bson:"approvals"`
 	ApprovalsCount    int       `json:"approvalsCount" bson:"approvalsCount"`
+	Generation        int       `json:"gen" bson:"generation"`
 }

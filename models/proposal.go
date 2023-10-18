@@ -24,6 +24,7 @@ type Proposal struct {
 	ExpiredTime     int64    `json:"expiredTime" bson:"expiredTime"`
 	Approvals       []string `json:"approvals" bson:"approvals"`
 	ApprovalsCount  int      `json:"approvalsCount" bson:"approvalsCount"`
+	Generation      int      `json:"gen" bson:"generation"`
 }
 type ProposalUpdate struct {
 }
