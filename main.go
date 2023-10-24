@@ -1,14 +1,21 @@
 package main
 
 import (
+	"github.com/AwespireTech/InterfaceForCare-Backend/config"
+	"github.com/AwespireTech/InterfaceForCare-Backend/database"
 	"github.com/AwespireTech/InterfaceForCare-Backend/routes"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	router := createRouter()
+	config.PrintConfig()
+	err := database.Init(config.DATABASE_URL)
+	if err != nil {
+		panic(err)
+	}
 
-	router.Run(":8080")
+	router := createRouter()
+	router.Run()
 }
 
 func createRouter() *gin.Engine {
@@ -16,6 +23,8 @@ func createRouter() *gin.Engine {
 	river := router.Group("api")
 	{
 		routes.SetRiverRoutes(river)
+		routes.SetUserRoutes(river)
+		routes.SetEventRoutes(river)
 	}
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{

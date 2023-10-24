@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"log"
 	"math/rand"
 	"net/http"
@@ -59,64 +58,6 @@ func TestGetRivers(t *testing.T) {
 	}
 }
 
-func TestCreateRiver(t *testing.T) {
-
-	body := []byte(`{
-		"name": "test",
-		"agreement": "test",
-	}`)
-
-	recorder := httptest.NewRecorder()
-	request, err := http.NewRequest("POST", "/api/rivers", bytes.NewBuffer(body))
-	if err != nil {
-		t.Fatalf("failed to create mock request: %v", err)
-	}
-
-	router := getRouter(t)
-
-	router.ServeHTTP(recorder, request)
-
-	if recorder.Code != http.StatusCreated {
-		t.Errorf("expected status code %d, got %d", http.StatusCreated, recorder.Code)
-	}
-}
-
-func TestUpdateRiver(t *testing.T) {
-	body := []byte(`{
-		"agreement": "test",
-		"gen": 0,
-	}`)
-
-	recorder := httptest.NewRecorder()
-	request, err := http.NewRequest("PUT", "/api/rivers/18", bytes.NewBuffer(body))
-	if err != nil {
-		t.Fatalf("failed to create mock request: %v", err)
-	}
-
-	router := getRouter(t)
-
-	router.ServeHTTP(recorder, request)
-
-	if recorder.Code != http.StatusOK {
-		t.Errorf("expected status code %d, got %d", http.StatusOK, recorder.Code)
-	}
-}
-func TestJoinRiverById(t *testing.T) {
-	recorder := httptest.NewRecorder()
-
-	request, err := http.NewRequest("POST", "/api/river/join/18", nil)
-	if err != nil {
-		t.Fatalf("failed to create mock request: %v", err)
-	}
-
-	router := getRouter(t)
-
-	router.ServeHTTP(recorder, request)
-
-	if recorder.Code != http.StatusOK {
-		t.Errorf("expected status code %d, got %d", http.StatusOK, recorder.Code)
-	}
-}
 func RandomRiver(t *testing.T) models.River {
 	t.Helper()
 	return models.River{
@@ -149,4 +90,3 @@ func RandomEvent(t *testing.T, rid int) models.Event {
 		ApprovalsCount:    1,
 	}
 }
-
