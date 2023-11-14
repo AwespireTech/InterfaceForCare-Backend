@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/AwespireTech/InterfaceForCare-Backend/models"
@@ -48,7 +49,9 @@ func GetRiverById(id int) (models.River, error) {
 	defer cancel()
 	collection := client.Database("InterfaceForCare").Collection("river")
 	var river models.River
-	err := collection.FindOne(ctx, models.River{ID: id}).Decode(&river)
+	err := collection.FindOne(ctx, bson.M{
+		"_id": id,
+	}).Decode(&river)
 	river = fillEventAndProposalData(river)
 	return river, err
 }
@@ -57,7 +60,9 @@ func GetEventById(id string) (models.Event, error) {
 	defer cancel()
 	collection := client.Database("InterfaceForCare").Collection("event")
 	var event models.Event
-	err := collection.FindOne(ctx, models.Event{ID: id}).Decode(&event)
+	err := collection.FindOne(ctx, bson.M{
+		"_id": id,
+	}).Decode(&event)
 	return event, err
 }
 func GetProposalById(id string) (models.Proposal, error) {
@@ -65,7 +70,9 @@ func GetProposalById(id string) (models.Proposal, error) {
 	defer cancel()
 	collection := client.Database("InterfaceForCare").Collection("proposal")
 	var proposal models.Proposal
-	err := collection.FindOne(ctx, models.Proposal{ID: id}).Decode(&proposal)
+	err := collection.FindOne(ctx, bson.M{
+		"_id": id,
+	}).Decode(&proposal)
 	return proposal, err
 }
 func fillEventAndProposalData(river models.River) models.River {
@@ -82,6 +89,7 @@ func fillEventAndProposalData(river models.River) models.River {
 	for _, proposalID := range river.Proposals {
 		proposal, err := GetProposalById(proposalID)
 		if err != nil {
+			log.Println("Proposal:" + proposalID + " error:" + err.Error())
 			continue
 		}
 		proposals = append(proposals, proposal)

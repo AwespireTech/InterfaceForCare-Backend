@@ -15,8 +15,13 @@ func (rc RiverController) GetAllRivers(c *gin.Context) {
 	params := models.RiversParams{}
 	err := c.ShouldBindJSON(&params)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+		if err.Error() == "EOF" {
+			params.Ascending = true
+			params.SortBy = "_id"
+		} else {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 	}
 	rivers, err := database.GetAllRivers(params)
 	if err != nil {
@@ -53,5 +58,5 @@ func (rc RiverController) GetAllProposals(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, river.Proposals)
+	c.JSON(http.StatusOK, river.ProposalData)
 }
