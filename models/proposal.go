@@ -17,7 +17,7 @@ type Proposal struct {
 	ID              string    `json:"uid" bson:"_id"`
 	TransactionType int       `json:"transactionType" bson:"transactionType"`
 	Agreement       string    `json:"agreement" bson:"agreement"`
-	Prompt          []string  `json:"prompt" bson:"prompt"`
+	Dataset         string    `json:"dataset" bson:"dataset"`
 	TargetAddress   string    `json:"targetAddr" bson:"targetAddress"`
 	TransferMutez   int       `json:"transferMutez" bson:"transferMutez"`
 	ProposerAddress string    `json:"proposerAddr" bson:"proposerAddress"`
