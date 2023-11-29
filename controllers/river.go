@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/AwespireTech/InterfaceForCare-Backend/database"
 	"github.com/AwespireTech/InterfaceForCare-Backend/models"
@@ -17,7 +16,7 @@ func (rc RiverController) GetAllRivers(c *gin.Context) {
 	if err != nil {
 		if err.Error() == "EOF" {
 			params.Ascending = true
-			params.SortBy = "_id"
+			params.SortBy = "createdTime"
 		} else {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -33,13 +32,8 @@ func (rc RiverController) GetAllRivers(c *gin.Context) {
 
 }
 func (riverController RiverController) GetRiverById(c *gin.Context) {
-
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid River Id"})
-		return
-	}
-	river, err := database.GetRiverById(id)
+	rid := c.Param("id")
+	river, err := database.GetRiverById(rid)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -48,12 +42,7 @@ func (riverController RiverController) GetRiverById(c *gin.Context) {
 }
 func (rc RiverController) GetAllProposals(c *gin.Context) {
 	rid := c.Param("id")
-	riverId, err := strconv.Atoi(rid)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid River Id"})
-		return
-	}
-	river, err := database.GetRiverById(riverId)
+	river, err := database.GetRiverById(rid)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

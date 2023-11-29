@@ -61,7 +61,7 @@ func TestGetRivers(t *testing.T) {
 func RandomRiver(t *testing.T) models.River {
 	t.Helper()
 	return models.River{
-		ID:            rand.Int(),
+		ID:            "test",
 		Name:          "test",
 		Agreement:     "test",
 		Generation:    0,

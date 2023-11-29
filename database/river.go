@@ -45,7 +45,7 @@ func GetAllRivers(param models.RiversParams) ([]models.River, error) {
 	return rivers, nil
 }
 
-func GetRiverById(id int) (models.River, error) {
+func GetRiverById(id string) (models.River, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 	collection := client.Database(config.DATABASE_NAME).Collection("river")

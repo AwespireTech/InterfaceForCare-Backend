@@ -10,7 +10,7 @@ const (
 const (
 	PROPOSAL_TYPE_TRANSFER = iota
 	PROPOSAL_TYPE_AGREEMENT
-	PROPOSAL_TYPE_PROMPT
+	PROPOSAL_TYPE_DATASET
 )
 
 type Proposal struct {
@@ -19,7 +19,7 @@ type Proposal struct {
 	Agreement       string    `json:"agreement" bson:"agreement"`
 	Dataset         string    `json:"dataset" bson:"dataset"`
 	TargetAddress   string    `json:"targetAddr" bson:"targetAddress"`
-	TransferMutez   int       `json:"transferMutez" bson:"transferMutez"`
+	TransferMutez   int64     `json:"transferMutez" bson:"transferMutez"`
 	ProposerAddress string    `json:"proposerAddr" bson:"proposerAddress"`
 	Status          int       `json:"status" bson:"status"`
 	CreatedTime     time.Time `json:"createdTime" bson:"createdTime"`
