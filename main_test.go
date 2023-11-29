@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/AwespireTech/InterfaceForCare-Backend/database"
-	"github.com/AwespireTech/InterfaceForCare-Backend/models"
+	"github.com/AwespireTech/RiverCare-Backend/database"
+	"github.com/AwespireTech/RiverCare-Backend/models"
 	"github.com/gin-gonic/gin"
 )
 

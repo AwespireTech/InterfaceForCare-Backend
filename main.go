@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/AwespireTech/InterfaceForCare-Backend/config"
-	"github.com/AwespireTech/InterfaceForCare-Backend/database"
-	"github.com/AwespireTech/InterfaceForCare-Backend/routes"
+	"github.com/AwespireTech/RiverCare-Backend/config"
+	"github.com/AwespireTech/RiverCare-Backend/database"
+	"github.com/AwespireTech/RiverCare-Backend/routes"
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,7 +28,7 @@ func createRouter() *gin.Engine {
 	}
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"message": "Welcome to InterfaceForCare API",
+			"message": "Welcome to RiverCare API",
 		})
 	})
 	return router

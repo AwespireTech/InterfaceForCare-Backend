@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/AwespireTech/InterfaceForCare-Backend/controllers"
+	"github.com/AwespireTech/RiverCare-Backend/controllers"
 	"github.com/gin-gonic/gin"
 )
 

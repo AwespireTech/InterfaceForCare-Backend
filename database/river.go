@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/AwespireTech/InterfaceForCare-Backend/config"
-	"github.com/AwespireTech/InterfaceForCare-Backend/models"
+	"github.com/AwespireTech/RiverCare-Backend/config"
+	"github.com/AwespireTech/RiverCare-Backend/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )

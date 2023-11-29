@@ -1,4 +1,4 @@
-module github.com/AwespireTech/InterfaceForCare-Backend
+module github.com/AwespireTech/RiverCare-Backend
 
 go 1.21
 

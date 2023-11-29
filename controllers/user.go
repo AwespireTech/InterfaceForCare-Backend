@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/AwespireTech/InterfaceForCare-Backend/database"
+	"github.com/AwespireTech/RiverCare-Backend/database"
 	"github.com/gin-gonic/gin"
 )
 
