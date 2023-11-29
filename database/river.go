@@ -5,6 +5,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/AwespireTech/InterfaceForCare-Backend/config"
 	"github.com/AwespireTech/InterfaceForCare-Backend/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -19,7 +20,7 @@ func ascending(isAscending bool) int {
 func GetAllRivers(param models.RiversParams) ([]models.River, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
-	collection := client.Database("InterfaceForCare").Collection("river")
+	collection := client.Database(config.DATABASE_NAME).Collection("river")
 	var rivers []models.River
 	findOptions := options.Find().SetSort(bson.D{{Key: param.SortBy, Value: ascending(param.Ascending)}})
 	cursor, err := collection.Find(ctx, bson.D{}, findOptions)
@@ -47,7 +48,7 @@ func GetAllRivers(param models.RiversParams) ([]models.River, error) {
 func GetRiverById(id int) (models.River, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
-	collection := client.Database("InterfaceForCare").Collection("river")
+	collection := client.Database(config.DATABASE_NAME).Collection("river")
 	var river models.River
 	err := collection.FindOne(ctx, bson.M{
 		"_id": id,
@@ -58,7 +59,7 @@ func GetRiverById(id int) (models.River, error) {
 func GetEventById(id string) (models.Event, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
-	collection := client.Database("InterfaceForCare").Collection("event")
+	collection := client.Database(config.DATABASE_NAME).Collection("event")
 	var event models.Event
 	err := collection.FindOne(ctx, bson.M{
 		"_id": id,
@@ -68,7 +69,7 @@ func GetEventById(id string) (models.Event, error) {
 func GetProposalById(id string) (models.Proposal, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
-	collection := client.Database("InterfaceForCare").Collection("proposal")
+	collection := client.Database(config.DATABASE_NAME).Collection("proposal")
 	var proposal models.Proposal
 	err := collection.FindOne(ctx, bson.M{
 		"_id": id,
@@ -104,7 +105,7 @@ func SaveEventAndProposalData(river models.River) (models.River, error) {
 		eventIDs = append(eventIDs, event.ID)
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 		defer cancel()
-		collection := client.Database("InterfaceForCare").Collection("event")
+		collection := client.Database(config.DATABASE_NAME).Collection("event")
 		_, err := collection.InsertOne(ctx, event)
 		if err != nil {
 			return river, err
@@ -116,7 +117,7 @@ func SaveEventAndProposalData(river models.River) (models.River, error) {
 		proposalIDs = append(proposalIDs, proposal.ID)
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 		defer cancel()
-		collection := client.Database("InterfaceForCare").Collection("proposal")
+		collection := client.Database(config.DATABASE_NAME).Collection("proposal")
 		_, err := collection.InsertOne(ctx, proposal)
 		if err != nil {
 			return river, err

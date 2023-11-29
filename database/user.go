@@ -3,12 +3,13 @@ package database
 import (
 	"context"
 
+	"github.com/AwespireTech/InterfaceForCare-Backend/config"
 	"github.com/AwespireTech/InterfaceForCare-Backend/models"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
 func GetStewardshipTokensByUser(user string) ([]models.StewardHistory, error) {
-	db := GetClient().Database("InterfaceForCare").Collection("stewardshipHistory")
+	db := GetClient().Database(config.DATABASE_NAME).Collection("stewardshipHistory")
 	cur, err := db.Find(context.Background(), bson.D{
 		{
 			Key: "user", Value: user,
@@ -26,7 +27,7 @@ func GetStewardshipTokensByUser(user string) ([]models.StewardHistory, error) {
 
 }
 func GetEventTokensByUser(user string) ([]models.EventHistory, error) {
-	db := GetClient().Database("InterfaceForCare").Collection("eventHistory")
+	db := GetClient().Database(config.DATABASE_NAME).Collection("eventHistory")
 	cur, err := db.Find(context.Background(), bson.D{
 		{
 			Key: "user", Value: user,
@@ -44,7 +45,7 @@ func GetEventTokensByUser(user string) ([]models.EventHistory, error) {
 
 }
 func GetHostedEvents(user string) ([]models.Event, error) {
-	db := GetClient().Database("InterfaceForCare").Collection("event")
+	db := GetClient().Database(config.DATABASE_NAME).Collection("event")
 	cur, err := db.Find(context.Background(), bson.D{
 		{
 			Key: "host", Value: user,
