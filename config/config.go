@@ -9,6 +9,7 @@ import (
 var (
 	DATABASE_URL  string
 	DATABASE_NAME string
+	IPFS_URL     string
 )
 
 func init() {
