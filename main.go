@@ -4,6 +4,7 @@ import (
 	"github.com/AwespireTech/RiverCare-Backend/config"
 	"github.com/AwespireTech/RiverCare-Backend/database"
 	"github.com/AwespireTech/RiverCare-Backend/routes"
+	"github.com/AwespireTech/RiverCare-Backend/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,8 +21,10 @@ func main() {
 
 func createRouter() *gin.Engine {
 	router := gin.Default()
+	router.Use(utils.CORSMiddleware())
 	river := router.Group("api")
 	{
+		routes.SetIPFSRoutes(river)
 		routes.SetRiverRoutes(river)
 		routes.SetUserRoutes(river)
 		routes.SetEventRoutes(river)
