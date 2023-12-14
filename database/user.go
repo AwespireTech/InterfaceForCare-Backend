@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"regexp"
 
 	"github.com/AwespireTech/RiverCare-Backend/config"
 	"github.com/AwespireTech/RiverCare-Backend/models"
@@ -12,7 +13,7 @@ func GetStewardshipTokensByUser(user string) ([]models.StewardHistory, error) {
 	db := GetClient().Database(config.DATABASE_NAME).Collection("stewardshipHistory")
 	cur, err := db.Find(context.Background(), bson.D{
 		{
-			Key: "user", Value: user,
+			Key: "user", Value: regexp.QuoteMeta(user),
 		},
 	})
 	if err != nil {
@@ -30,7 +31,7 @@ func GetEventTokensByUser(user string) ([]models.EventHistory, error) {
 	db := GetClient().Database(config.DATABASE_NAME).Collection("eventHistory")
 	cur, err := db.Find(context.Background(), bson.D{
 		{
-			Key: "user", Value: user,
+			Key: "user", Value: regexp.QuoteMeta(user),
 		},
 	})
 	if err != nil {
@@ -48,7 +49,7 @@ func GetHostedEvents(user string) ([]models.Event, error) {
 	db := GetClient().Database(config.DATABASE_NAME).Collection("event")
 	cur, err := db.Find(context.Background(), bson.D{
 		{
-			Key: "host", Value: user,
+			Key: "host", Value: regexp.QuoteMeta(user),
 		},
 	})
 	if err != nil {
