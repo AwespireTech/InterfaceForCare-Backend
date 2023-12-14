@@ -30,3 +30,7 @@ type Proposal struct {
 }
 type ProposalUpdate struct {
 }
+type ProposalFilter struct {
+	ID string `json:"id" bson:"_id,omitempty"`
+}
+

@@ -33,3 +33,7 @@ type RiversParams struct {
 	Ascending bool   `json:"ascending"`
 	SortBy    string `json:"sortBy"`
 }
+
+type RiverFilter struct {
+	ID string `json:"id" bson:"_id,omitempty"`
+}

@@ -15,3 +15,7 @@ type EventHistory struct {
 	TokenContract string `json:"tokenContract" bson:"tokenContract"`
 	TokenId       int    `json:"tokenId" bson:"tokenId"`
 }
+type HistoryFilter struct {
+	User string `json:"user" bson:"user,omitempty"`
+	Host string `json:"host" bson:"host,omitempty"`
+}

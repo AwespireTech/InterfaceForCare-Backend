@@ -20,3 +20,6 @@ type Event struct {
 	ApprovalsCount    int       `json:"approvalsCount" bson:"approvalsCount"`
 	Generation        int       `json:"gen" bson:"generation"`
 }
+type EventFilter struct {
+	ID string `json:"id" bson:"_id,omitempty"`
+}

@@ -3,7 +3,6 @@ package database
 import (
 	"context"
 	"log"
-	"regexp"
 	"time"
 
 	"github.com/AwespireTech/RiverCare-Backend/config"
@@ -51,9 +50,10 @@ func GetRiverById(id string) (models.River, error) {
 	defer cancel()
 	collection := client.Database(config.DATABASE_NAME).Collection("river")
 	var river models.River
-	err := collection.FindOne(ctx, bson.M{
-		"_id": regexp.QuoteMeta(id),
-	}).Decode(&river)
+	filter := models.RiverFilter{
+		ID: id,
+	}
+	err := collection.FindOne(ctx, filter).Decode(&river)
 	river = fillEventAndProposalData(river)
 	return river, err
 }
@@ -62,9 +62,10 @@ func GetEventById(id string) (models.Event, error) {
 	defer cancel()
 	collection := client.Database(config.DATABASE_NAME).Collection("event")
 	var event models.Event
-	err := collection.FindOne(ctx, bson.M{
-		"_id": regexp.QuoteMeta(id),
-	}).Decode(&event)
+	filter := models.EventFilter{
+		ID: id,
+	}
+	err := collection.FindOne(ctx, filter).Decode(&event)
 	return event, err
 }
 func GetProposalById(id string) (models.Proposal, error) {
@@ -72,9 +73,10 @@ func GetProposalById(id string) (models.Proposal, error) {
 	defer cancel()
 	collection := client.Database(config.DATABASE_NAME).Collection("proposal")
 	var proposal models.Proposal
-	err := collection.FindOne(ctx, bson.M{
-		"_id": regexp.QuoteMeta(id),
-	}).Decode(&proposal)
+	filter := models.ProposalFilter{
+		ID: id,
+	}
+	err := collection.FindOne(ctx, filter).Decode(&proposal)
 	return proposal, err
 }
 func fillEventAndProposalData(river models.River) models.River {
