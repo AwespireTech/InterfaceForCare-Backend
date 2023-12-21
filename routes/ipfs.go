@@ -7,5 +7,5 @@ import (
 
 func SetIPFSRoutes(router *gin.RouterGroup) {
 	ipfsController := controllers.IPFSController{}
-	router.GET("/*path", ipfsController.Forward)
+	router.GET("/ipfs/*path", ipfsController.Forward)
 }
